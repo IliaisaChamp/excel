@@ -10,4 +10,4 @@ make lint:
 	npx eslint . --ext js
 
 install-deps:
-	npm install
+	npm ci

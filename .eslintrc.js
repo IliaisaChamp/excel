@@ -5,11 +5,14 @@ module.exports = {
     node: true,
     jest: true,
   },
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   extends: ['eslint:recommended', 'airbnb'],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
+    babelOptions: {
+      configFile: './babel.config.json',
+    },
   },
   rules: {
     'no-console': 'off',

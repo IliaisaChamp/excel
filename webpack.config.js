@@ -34,7 +34,7 @@ module.exports = (ENV, argv) => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        favicon: './assets/favicon.ico',
+        favicon: './favicon',
         template: './index.html',
       }),
       new MiniCssExtractPlugin({
@@ -45,7 +45,7 @@ module.exports = (ENV, argv) => {
     module: {
       rules: [
         {
-          test: /\.js?$/,
+          test: /\.m?js$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
