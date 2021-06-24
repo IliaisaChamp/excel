@@ -2,7 +2,7 @@
 @import 'mixins';
 
 .excel-header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -18,7 +18,7 @@
     color: #000000;
     border: 1px solid transparent;
     border-radius: 2px;
-    height: 20px;
+    height: 26px;
     min-width: 1px;
     font-size: 18px;
     line-height: 22px;
