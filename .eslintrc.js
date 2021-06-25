@@ -18,7 +18,8 @@ module.exports = {
     'no-console': 'off',
     semi: 'off',
     'comma-dangle': 'off',
-    "no-param-reassign": 'off',
+    'no-param-reassign': 'off',
+    'no-plusplus': 'off',
     'linebreak-style': ['error', process.env.NODE_ENV === 'production' ? 'unix' : 'windows'],
   },
-};
+}
