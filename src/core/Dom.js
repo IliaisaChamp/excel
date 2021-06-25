@@ -18,12 +18,11 @@ class Dom {
     return this
   }
 
+  event = (eventType, callback) => this.#el.addEventListener(eventType, callback)
+
+  removeEvent = (eventType, callback) => this.#el.removeEventListener(eventType, callback)
+
   append = (node) => {
-    // if (Element.prototype.append) {
-    //   this.#el.append(node.#el)
-    // } else {
-    //   this.#el.appendChiled(node.#el)
-    // }
     if (node instanceof Dom) {
       node = node.#el
     }
