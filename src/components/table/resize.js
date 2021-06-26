@@ -18,14 +18,16 @@ export default function resizeTableHandle(event, $root) {
   const resizableCells = $root.findAll(`[data-col="${$parent.dataset.col}"]`)
 
   document.onmousemove = (e) => {
+    let delta
+
     if (isElType('col', event)) {
-      const delta = e.pageX - coords.right
+      delta = e.pageX - coords.right
       newWidth = coords.width + delta
       $resizer.addStyles({
         right: `${-delta}px`,
       })
     } else {
-      const delta = e.pageY - coords.bottom
+      delta = e.pageY - coords.bottom
       newHeight = coords.height + delta
       $resizer.addStyles({
         bottom: `${-delta}px`,
