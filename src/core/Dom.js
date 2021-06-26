@@ -1,8 +1,18 @@
+import * as _ from 'lodash'
+
 class Dom {
   #el
 
   constructor(selector) {
     this.#el = typeof selector === 'string' ? document.querySelector(selector) : selector
+  }
+
+  get el() {
+    return this.#el
+  }
+
+  get dataset() {
+    return this.#el.dataset
   }
 
   html = (html) => {
@@ -28,9 +38,23 @@ class Dom {
     }
     this.#el.append(node)
   }
+
+  closest = (selector) => $(this.#el.closest(selector))
+
+  getCoords = () => this.#el.getBoundingClientRect()
+
+  findAll = (selector) => this.#el.querySelectorAll(selector)
+
+  addStyles = (styles = {}) => {
+    _.keys(styles).forEach((prop) => {
+      this.#el.style[prop] = styles[prop]
+    })
+  }
 }
 
-const $ = (selector) => new Dom(selector)
+function $(selector) {
+  return new Dom(selector)
+}
 
 $.create = (tagName, classes = '') => {
   const el = document.createElement(tagName)
