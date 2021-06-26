@@ -20,6 +20,7 @@ module.exports = {
     'comma-dangle': 'off',
     'no-param-reassign': 'off',
     'no-plusplus': 'off',
+    'no-use-before-define': 'off',
     'linebreak-style': ['error', process.env.NODE_ENV === 'production' ? 'unix' : 'windows'],
   },
 }
