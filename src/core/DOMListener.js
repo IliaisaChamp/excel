@@ -15,18 +15,18 @@ export default class DOMListener {
     return this.#root
   }
 
-  initDOMListeners = () => {
+  initDOMListeners() {
     this.listeners.forEach((listener) => {
       const method = getMethodName(listener)
       if (!this[method]) {
         throw new Error(`Метод: ${method} не определен в компоненте: ${this.name} `)
       }
       this[method] = this[method].bind(this)
-      this.#root.event(listener, this[method])
+      this.#root.addEvent(listener, this[method])
     })
   }
 
-  removeDOMListeners = () => {
+  removeDOMListeners() {
     this.listeners.forEach((listener) => {
       const method = getMethodName(listener)
       this.#root.removeEvent(listener, this[method])

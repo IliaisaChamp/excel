@@ -1,4 +1,5 @@
 import $ from '../../core/Dom'
+import Emitter from '../../core/Emitter'
 
 export default class Excel {
   #element
@@ -6,14 +7,17 @@ export default class Excel {
   constructor(selector, options) {
     this.#element = $(selector)
     this.components = options.components || []
+    this.emitter = new Emitter()
   }
 
-  getRoot = () => {
+  getRoot() {
     const $root = $.create('div', 'excel')
+
+    const componentOprions = { emitter: this.emitter }
 
     this.components = this.components.map((Component) => {
       const el = $.create('div', Component.className)
-      const component = new Component(el)
+      const component = new Component(el, componentOprions)
       el.html(component.toHTML())
 
       $root.append(el)
@@ -22,8 +26,12 @@ export default class Excel {
     return $root
   }
 
-  render = () => {
+  render() {
     this.#element.append(this.getRoot())
     this.components.forEach((component) => component.init())
+  }
+
+  destroy() {
+    this.components.forEach((component) => component.destroy())
   }
 }
