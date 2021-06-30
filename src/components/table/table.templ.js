@@ -25,8 +25,18 @@ function createCol(col, colIndex) {
     </div>`
 }
 
-function createCell(_, colIndex) {
-  return `<div class="cell" contenteditable="true" data-col="${colIndex}"></div>`
+function createCell(row) {
+  // eslint-disable-next-line func-names
+  return function (_, colIndex) {
+    return `
+    <div
+      class="cell"
+      contenteditable="true"
+      data-col="${colIndex}"
+      data-type="cell"
+      data-id="${row}:${colIndex}">
+    </div>`
+  }
 }
 
 export default function createTable(rowsCount = 100) {
@@ -41,10 +51,9 @@ export default function createTable(rowsCount = 100) {
 
   rows.push(createRow(null, cols))
 
-  const cells = new Array(colsCount).fill('').map(createCell).join('')
-
-  for (let i = 0; i < rowsCount; i++) {
-    rows.push(createRow(i + 1, cells))
+  for (let row = 0; row < rowsCount; row++) {
+    const cells = new Array(colsCount).fill('').map(createCell(row)).join('')
+    rows.push(createRow(row + 1, cells))
   }
 
   return rows.join('')

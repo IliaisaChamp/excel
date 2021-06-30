@@ -3,6 +3,14 @@ import ExcelComponent from '../../core/ExcelComponent'
 export default class Header extends ExcelComponent {
   static className = 'excel-header'
 
+  constructor($root, options) {
+    super($root, {
+      name: 'Header',
+      // listeners: ['input', 'click'],
+      ...options,
+    })
+  }
+
   toHTML = () => `
       <input type="text" class="input" value="Новая таблица" />
           <div>

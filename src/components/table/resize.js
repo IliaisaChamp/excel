@@ -1,5 +1,5 @@
 import $ from '../../core/Dom'
-import { isElType } from './utis'
+import { isResizeType } from './utis'
 
 export default function resizeTableHandle(event, $root) {
   const $resizer = $(event.target)
@@ -9,7 +9,7 @@ export default function resizeTableHandle(event, $root) {
   let newWidth
   let newHeight
 
-  const sideProp = isElType('col', event) ? 'bottom' : 'right'
+  const sideProp = isResizeType('col', event) ? 'bottom' : 'right'
   $resizer.addStyles({
     opacity: 1,
     [sideProp]: '-5000px',
@@ -18,7 +18,7 @@ export default function resizeTableHandle(event, $root) {
   const resizableCells = $root.findAll(`[data-col="${$parent.dataset.col}"]`)
 
   document.onmousemove = (e) => {
-    if (isElType('col', event)) {
+    if (isResizeType('col', event)) {
       const delta = e.pageX - coords.right
       newWidth = coords.width + delta
       $resizer.addStyles({
@@ -42,7 +42,7 @@ export default function resizeTableHandle(event, $root) {
       right: 0,
     })
 
-    if (isElType('col', event)) {
+    if (isResizeType('col', event)) {
       $parent.addStyles({ width: `${newWidth}px` })
       resizableCells.forEach((el) => {
         el.style.width = `${newWidth}px`
