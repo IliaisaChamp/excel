@@ -2,9 +2,10 @@ import ExcelComponent from '../../core/ExcelComponent'
 import $ from '../../core/Dom'
 import TableSelection from './TableSelection'
 import createTable from './table.templ'
-import resizeTableHandle from './resize'
+import resizeTableHandler from './resize'
 // eslint-disable-next-line object-curly-newline
 import { isCell, shouldResize, matrix, nextSelector } from './utis'
+import * as actions from '../../redux/actions'
 
 export default class Table extends ExcelComponent {
   static className = 'excel-table'
@@ -25,6 +26,7 @@ export default class Table extends ExcelComponent {
     super.init()
 
     const $cell = this.root.find('[data-id="0:0"]')
+    console.log($cell)
     this.selectCell($cell)
 
     this.$on('formula:input', (text) => {
@@ -36,9 +38,18 @@ export default class Table extends ExcelComponent {
     })
   }
 
+  async resizeTable(event) {
+    try {
+      const data = await resizeTableHandler(event, this.root)
+      this.$dispatch(actions.tableResize(data))
+    } catch (e) {
+      console.warn(`Resize error: ${e.message}`)
+    }
+  }
+
   onMousedown(event) {
     if (shouldResize(event)) {
-      resizeTableHandle(event, this.root)
+      this.resizeTable(event)
     } else if (isCell('cell', event)) {
       const $target = $(event.target)
       if (event.shiftKey) {
@@ -72,5 +83,7 @@ export default class Table extends ExcelComponent {
     this.$emit('table:select', cell)
   }
 
-  toHTML = () => createTable()
+  toHTML() {
+    return createTable(100, this.store.getState())
+  }
 }
