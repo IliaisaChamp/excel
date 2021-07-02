@@ -5,10 +5,10 @@ export default function resizeTableHandler(event, $root) {
   return new Promise((resolve) => {
     const $resizer = $(event.target)
     const $parent = $resizer.closest('[data-type="resizable"]')
+    const type = $resizer.dataset.resize
     const coords = $parent.getCoords()
 
-    let newWidth
-    let newHeight
+    let newSize
 
     const sideProp = isResizeType('col', event) ? 'bottom' : 'right'
     $resizer.addStyles({
@@ -19,15 +19,15 @@ export default function resizeTableHandler(event, $root) {
     const resizableCells = $root.findAll(`[data-col="${$parent.dataset.col}"]`)
 
     document.onmousemove = (e) => {
-      if (isResizeType('col', event)) {
+      if (type === 'col') {
         const delta = e.pageX - coords.right
-        newWidth = coords.width + delta
+        newSize = Math.round(coords.width + delta)
         $resizer.addStyles({
           right: `${-delta}px`,
         })
       } else {
         const delta = e.pageY - coords.bottom
-        newHeight = coords.height + delta
+        newSize = Math.round(coords.height + delta)
         $resizer.addStyles({
           bottom: `${-delta}px`,
         })
@@ -43,18 +43,19 @@ export default function resizeTableHandler(event, $root) {
         right: 0,
       })
 
-      if (isResizeType('col', event)) {
-        $parent.addStyles({ width: `${newWidth}px` })
+      if (type === 'col') {
+        $parent.addStyles({ width: `${newSize}px` })
         resizableCells.forEach((el) => {
-          el.style.width = `${newWidth}px`
+          el.style.width = `${newSize}px`
         })
       } else {
-        $parent.addStyles({ height: `${newHeight}px` })
+        $parent.addStyles({ height: `${newSize}px` })
       }
 
       resolve({
-        value: newWidth,
-        id: isResizeType('col', event) ? $parent.dataset.col : null,
+        value: newSize,
+        type,
+        id: $parent.dataset[type],
       })
     }
   })

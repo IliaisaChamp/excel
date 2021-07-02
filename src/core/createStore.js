@@ -1,3 +1,5 @@
+import * as _ from 'lodash'
+
 export default function createStore(rootReducer, initialState = {}) {
   let state = rootReducer({ ...initialState }, { type: '__INIT__' })
   let subscribers = []
@@ -16,7 +18,7 @@ export default function createStore(rootReducer, initialState = {}) {
       subscribers.forEach((subscriber) => subscriber(state))
     },
     getState() {
-      return state
+      return _.cloneDeep(state)
     },
   }
 }

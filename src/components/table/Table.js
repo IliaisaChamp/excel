@@ -26,11 +26,10 @@ export default class Table extends ExcelComponent {
     super.init()
 
     const $cell = this.root.find('[data-id="0:0"]')
-    console.log($cell)
     this.selectCell($cell)
 
     this.$on('formula:input', (text) => {
-      this.selection.current.text(text)
+      this.updateTextinStore(text)
     })
 
     this.$on('formula:done', () => {
@@ -41,6 +40,7 @@ export default class Table extends ExcelComponent {
   async resizeTable(event) {
     try {
       const data = await resizeTableHandler(event, this.root)
+
       this.$dispatch(actions.tableResize(data))
     } catch (e) {
       console.warn(`Resize error: ${e.message}`)
@@ -74,8 +74,17 @@ export default class Table extends ExcelComponent {
     }
   }
 
+  updateTextinStore(text) {
+    this.$dispatch(
+      actions.changeText({
+        id: this.selection.current.getId(),
+        text,
+      }),
+    )
+  }
+
   onInput(event) {
-    this.$emit('table:input', $(event.target))
+    this.updateTextinStore($(event.target).text())
   }
 
   selectCell(cell) {
@@ -83,7 +92,5 @@ export default class Table extends ExcelComponent {
     this.$emit('table:select', cell)
   }
 
-  toHTML() {
-    return createTable(100, this.store.getState())
-  }
+  toHTML = () => createTable(100, this.store.getState())
 }
