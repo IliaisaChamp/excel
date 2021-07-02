@@ -17,7 +17,7 @@ module.exports = (ENV, argv) => {
       extensions: ['.js'],
       alias: {
         '@': path.resolve(__dirname, 'src'),
-        '@core': path.resolve(__dirname, 'src', 'core'),
+        '@core': path.resolve(__dirname, 'src/core'),
       },
     },
     output: {
@@ -65,5 +65,5 @@ module.exports = (ENV, argv) => {
         },
       ],
     },
-  };
+  }
 };
