@@ -23,7 +23,6 @@ export default function resizeTableHandle(event, $root) {
 
     if (isElType('col', event)) {
       delta = e.pageX - coords.right
-=======
     if (isResizeType('col', event)) {
       const delta = e.pageX - coords.right
       newWidth = coords.width + delta
