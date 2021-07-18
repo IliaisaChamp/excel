@@ -24,12 +24,12 @@ class Dom {
   }
 
   text(text) {
-    if (typeof text === 'string') {
+    if (typeof text !== 'undefined') {
       this.#el.textContent = text
       return this
     }
     if (this.#el.tagName.toLowerCase() === 'input') {
-      this.#el.value.trim()
+      return this.#el.value.trim()
     }
     // eslint-disable-next-line no-return-assign
     return this.#el.textContent.trim()
@@ -74,10 +74,25 @@ class Dom {
     return this.dataset.id
   }
 
-  addStyles = (styles = {}) => {
+  addStyles(styles = {}) {
     _.keys(styles).forEach((prop) => {
       this.#el.style[prop] = styles[prop]
     })
+  }
+
+  getStyles(styles = []) {
+    return styles.reduce((acc, style) => {
+      acc[style] = this.#el.style[style]
+      return acc
+    }, [])
+  }
+
+  attr(name, value) {
+    if (value) {
+      this.#el.setAttribute(name, value)
+      return this
+    }
+    return this.#el.getAttribute(name)
   }
 
   addClass(className) {

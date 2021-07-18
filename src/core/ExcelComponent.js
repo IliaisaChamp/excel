@@ -5,6 +5,8 @@ export default class ExcelComponent extends DOMListener {
     super($root, options.listeners)
     this.name = options.name || ''
     this.emitter = options.emitter
+    this.subscribe = options.subscribe || []
+    this.store = options.store
     this.unsubscribers = []
     this.prepare()
   }
@@ -28,9 +30,22 @@ export default class ExcelComponent extends DOMListener {
     this.unsubscribers.push(unsub)
   }
 
+  // изменения в store
+  $dispatch(action) {
+    this.store.dispatch(action)
+  }
+
   // инициализация компонента, добавление DOM listeners
   init() {
     this.initDOMListeners()
+  }
+
+  // Изменение для тех полей на которые подписан
+  // eslint-disable-next-line class-methods-use-this
+  storeChanged() {}
+
+  isWatching(key) {
+    return this.subscribe.includes(key)
   }
 
   // удаление компонента, очистка DOM listeners
