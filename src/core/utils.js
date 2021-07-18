@@ -11,3 +11,25 @@ export function storage(key, data = null) {
   }
   localStorage.setItem(key, JSON.stringify(data))
 }
+
+export function camelToDashCase(str) {
+  return str.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)
+}
+
+export function toInlineStyles(styles = {}) {
+  return Object.keys(styles)
+    .map((key) => `${camelToDashCase(key)}:${styles[key]}`)
+    .join(';')
+}
+
+export function debounce(fn, wait) {
+  let timeout
+  return (...args) => {
+    const later = () => {
+      clearTimeout(timeout)
+      fn(...args)
+    }
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+  }
+}
