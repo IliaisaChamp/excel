@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest --env=jsdom",
     "test:watch": "jest --watch",
-    "start": "npx webpack serve --open --mode=development",
-    "build": "webpack --mode=production"
+    "dev": "npx webpack serve --open --mode=development",
+    "start": "webpack --mode=production"
   },
   "repository": {
     "type": "git",
