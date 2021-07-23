@@ -1,6 +1,6 @@
-import Page from '../core/Page'
+import Page from '../core/page/Page'
 import $ from '../core/Dom'
-import createRecordsTable from './dashboardFunctions'
+import createRecordsTable from '../shared/dashboardFunctions'
 
 export default class DashboardPage extends Page {
   // eslint-disable-next-line class-methods-use-this
