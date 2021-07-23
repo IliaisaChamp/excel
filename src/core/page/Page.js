@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 export default class Page {
   constructor(params) {
-    this.params = params
+    this.params = params || Date.now().toString()
   }
 
   getRoot() {

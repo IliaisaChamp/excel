@@ -1,12 +1,11 @@
 /* eslint-disable max-classes-per-file */
 import Router from '../src/core/routes/Router'
-import Page from '../src/core/Page'
+import Page from '../src/core/page/Page'
 
 class DachboardPage extends Page {
   // eslint-disable-next-line class-methods-use-this
   getRoot() {
     const root = document.createElement('div')
-    root.innerHTML = 'dashboard'
     return root
   }
 }
@@ -30,6 +29,8 @@ describe('router', () => {
 
   test('should render dashboard page', () => {
     router.changePageHandler()
-    expect($root.innerHTML).toBe('<div>dashboard</div>')
+    expect($root.innerHTML).toBe(
+      '<div class="loader"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>',
+    )
   })
 })
